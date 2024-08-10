@@ -12,14 +12,12 @@ class Match(Base):
 
     match_id = Column(Integer, primary_key=True) # from api
     tour = Column(Text, nullable=False)
-    league_id = Column(Integer)
     status = Column(Text, nullable=False)
     team_home = Column(Text, nullable=False)
     team_away = Column(Text, nullable=False)
     goals_home = Column(Integer)
     goals_away = Column(Integer)
-    datetime = Column(Text)
-    # datetime = Column(DateTime)
+    datetime = Column(DateTime)
     forecast = relationship('Forecast')
 
     def __repr__(self):

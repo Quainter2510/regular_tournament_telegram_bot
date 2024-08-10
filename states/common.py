@@ -1,7 +1,7 @@
 from telebot.handler_backends import State, StatesGroup
 from loader import bot
 from telebot import custom_filters
-from libs.additional_filters.additional_filters import *
+from libs.additional_filters import *
 
 
 class Registration(StatesGroup):

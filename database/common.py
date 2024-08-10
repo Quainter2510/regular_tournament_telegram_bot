@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from time import time 
 from typing import List, Tuple
 from libs.player import Player
+from libs.data_match import DataMatch
 
 
 from database.models import Base, Match, User, Forecast
@@ -33,6 +34,18 @@ class DataBase:
         matches_id = self.get_all_matches_id()
         for match_id in matches_id:
             self.add_forecast_for_player(match_id[0], player_id)
+    
+    def add_match(self, match_data: DataMatch) -> None:
+        new_match = Match(match_id=match_data.match_id,
+                          tour=match_data.tour,
+                          status=match_data.status,
+                          team_home=match_data.home_team,
+                          team_away=match_data.away_team,
+                          goals_home=match_data.home_goals,
+                          goals_away=match_data.away_goals,
+                          datetime=match_data.datetime)
+        self.session.add(new_match)
+        self.session.commit()
 
     def get_all_matches_id(self) -> List[Tuple[int]]:
         """[(match_id,), ...]"""
@@ -79,3 +92,9 @@ class DataBase:
     
     def is_repeat_nickname_in_tournament(self, nickname):
         return self.session.query(User.telegram_id).filter(User.username == nickname).one_or_none() != None
+    
+    def overwrite_matches(self, matches):
+        self.session.query(Match).delete()
+        for match in matches:
+            self.add_match(match)
+        

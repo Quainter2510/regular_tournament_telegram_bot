@@ -2,10 +2,12 @@ from database.common import DataBase
 from config import config
 from libs.player import Player
 from libs.tournamentError import TournamentError
+from libs.parser import Parser
 
 class Tournament:
     def __init__(self) -> None:
         self.database = DataBase()
+        self.parser = Parser()
 
     def add_player(self, nickname, tg_id):
         self.possible_to_register(nickname, tg_id)
@@ -57,6 +59,10 @@ class Tournament:
     
     def get_players_info(self):
         return self.database.get_players_info()
+    
+    def overwrite_matches(self):
+        full_matches = self.parser.parse()
+        self.database.overwrite_matches(full_matches)
         
 
 
