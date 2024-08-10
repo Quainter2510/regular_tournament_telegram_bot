@@ -14,15 +14,23 @@ def set_payment_for_change_player(message):
     
 @bot.callback_query_handler(state=Admin.choice_player_for_change_payment, func=lambda call: call.data != "0")
 def choice_player_for_change_payment(call):
-    bot.send_message(call.message.chat.id, "Выбери статус оплаты", reply_markup=get_all_payments_keyboard(call.data))
-    bot.set_state(call.message.chat.id, Admin.change_payment)
+    bot.edit_message_text(chat_id=call.message.chat.id, 
+                        message_id=call.message.message_id,
+                        text=call.message.text)
+    with bot.retrieve_data(call.from_user.id, call.message.chat.id) as data:
+        data["choice_player"] = call.data
+        bot.send_message(call.message.chat.id, "Выбери статус оплаты", reply_markup=get_all_payments_keyboard())
+        bot.set_state(call.message.chat.id, Admin.change_payment)
         
 @bot.callback_query_handler(state=Admin.change_payment, func=lambda call: call.data != "0")
 def change_payment_of_player(call):
-    player_id, status = call.data.split("_")
+    bot.edit_message_text(chat_id=call.message.chat.id, 
+                        message_id=call.message.message_id,
+                        text=call.message.text)
     try:
-        tournament.set_payment_for_player(int(player_id), status)
-        bot.send_message(call.message.chat.id, "Вы изменили статус оплаты игрока",  reply_markup=get_main_menu_keyboard())
+        with bot.retrieve_data(call.from_user.id, call.message.chat.id) as data:
+            tournament.set_payment_for_player(int(data.get("choice_player")), call.data)
+            bot.send_message(call.message.chat.id, "Вы изменили статус оплаты игрока",  reply_markup=get_main_menu_keyboard())
     except TournamentError as e:
         bot.send_message(call.message.chat.id, e, reply_markup=get_main_menu_keyboard())
     bot.set_state(call.message.chat.id, MainMenu.main_menu)

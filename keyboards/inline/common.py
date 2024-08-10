@@ -13,17 +13,17 @@ def get_all_players_keyboard(players_data):
         markup.add(InlineKeyboardButton(username, callback_data=str(player_id)))
     return markup
 
-def get_all_statuses_keyboard(player_id):
+def get_all_statuses_keyboard():
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton("главное меню", callback_data="0"))
-    markup.add(InlineKeyboardButton("admin", callback_data=f"{player_id}_admin"))
-    markup.add(InlineKeyboardButton("player", callback_data=f"{player_id}_player"))
+    markup.add(InlineKeyboardButton("admin", callback_data="admin"))
+    markup.add(InlineKeyboardButton("player", callback_data="player"))
     return markup
 
-def get_all_payments_keyboard(player_id):
+def get_all_payments_keyboard():
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton("главное меню", callback_data="0"))
-    markup.add(InlineKeyboardButton("debtor", callback_data=f"{player_id}_debtor"))
-    markup.add(InlineKeyboardButton("paid", callback_data=f"{player_id}_paid"))
+    markup.add(InlineKeyboardButton("debtor", callback_data="debtor"))
+    markup.add(InlineKeyboardButton("paid", callback_data="paid"))
     return markup
     
