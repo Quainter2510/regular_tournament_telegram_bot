@@ -1,7 +1,7 @@
 from loader import bot, tournament
 from keyboards.inline.inline_keyboards import get_all_players_keyboard
 from states.common import Admin, MainMenu
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 
 @bot.message_handler(commands=["delete_user"], is_admin=True)
 def providing_choice_for_deletion(message):

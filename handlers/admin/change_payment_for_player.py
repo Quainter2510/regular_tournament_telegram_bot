@@ -2,7 +2,7 @@ from loader import bot, tournament
 from keyboards.inline.inline_keyboards import get_all_players_keyboard, get_all_payments_keyboard
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 from states.common import Admin, MainMenu
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 
 
 

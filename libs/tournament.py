@@ -1,7 +1,7 @@
 from database.common import DataBase
 from config import config
 from libs.player import Player
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 from libs.parser import Parser
 
 class Tournament:
@@ -74,9 +74,12 @@ class Tournament:
         return self.database.get_not_started_matches_of_tour(tour)
 
     def set_forecast(self, match_id, forecast, player_id):
+        if self.database.is_started_match(match_id):
+            raise TournamentError("Время прогноза истекло")
         self.database.set_forecast(player_id, match_id, int(forecast.split()[0]), int(forecast.split()[1]))
 
     def is_started_match(self, match_id):
         return self.database.is_started_match(match_id)
 
-    
+    def get_predict_match(self, player_id, match_id):
+        return self.database.get_predict_match(player_id, match_id)

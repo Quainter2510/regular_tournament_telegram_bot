@@ -2,7 +2,7 @@ from loader import bot, tournament
 from states.common import MainMenu
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 from sqlalchemy.exc import IntegrityError
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 
 
 @bot.message_handler(state="*", regexp="^Изменить имя$")

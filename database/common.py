@@ -127,4 +127,9 @@ class DataBase:
         
     def is_started_match(self, match_id):
         return self.session.query(Match.match_id).filter(Match.match_id == match_id, 
-                                                       Match.datetime > datetime.now()).all() == None
+                                                       Match.datetime > datetime.now()).first() == None
+        
+    def get_predict_match(self, user_id: int, match_id: int) -> Tuple[int]:
+        """(goals_home_predict, goals_away_predict)"""
+        return self.session.query(Forecast.goals_home_predict, Forecast.goals_away_predict).\
+            filter(Forecast.match_id == match_id, Forecast.user_id == user_id).first()

@@ -16,6 +16,10 @@ class MainMenu(StatesGroup):
     choice_tour_for_change_forecast = State()
     choice_match_for_change_forecast = State()
     
+    choice_tour_for_set_forecast = State()
+    set_forecasts = State()
+    
+    
     enter_forecast = State()
     
 

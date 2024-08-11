@@ -1,5 +1,5 @@
 from loader import bot, tournament
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 from telebot.types import Message 
 from states.common import Registration, MainMenu
 from keyboards.inline.inline_keyboards import *

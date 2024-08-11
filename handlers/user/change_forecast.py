@@ -2,6 +2,7 @@ from loader import bot, tournament
 from keyboards.reply.reply_keyboards import get_short_tour_menu_keyboard, get_main_menu_keyboard
 from keyboards.inline.inline_keyboards import get_matches_menu
 from states.common import MainMenu
+from libs.tournament_error import TournamentError
 
 @bot.message_handler(regexp="^Изменить прогноз$")
 def choice_tour(message):
@@ -28,12 +29,13 @@ def enter_score(call):
 def set_forecast(message):
     with bot.retrieve_data(message.chat.id, message.chat.id) as data:
         match_id = data.get("selected_match_id")
-    if tournament.is_started_match(match_id):
-        bot.send_message(message.chat.id, "Время прогноза истекло", reply_markup=get_main_menu_keyboard())
-    else:
+    try:
         tournament.set_forecast(match_id, message.text, message.chat.id)
         bot.send_message(message.chat.id, "Прогноз изменен", reply_markup=get_main_menu_keyboard())
-    bot.set_state(message.chat.id, MainMenu.main_menu)
+        bot.set_state(message.chat.id, MainMenu.main_menu)
+    except TournamentError as e:
+        bot.send_message(message.chat.id, e, reply_markup=get_main_menu_keyboard())
+        bot.set_state(message.chat.id, MainMenu.main_menu)
     
 @bot.message_handler(state=MainMenu.enter_forecast, is_correct_score=False, func=lambda call: True)
 def incorrect_score(message):

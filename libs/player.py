@@ -1,5 +1,5 @@
 from config import config
-from libs.tournamentError import TournamentError
+from libs.tournament_error import TournamentError
 
 class Player:
     def __init__(self, nickname, tg_id) -> None:
