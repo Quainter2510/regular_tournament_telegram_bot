@@ -1,6 +1,6 @@
 from loader import bot, tournament
 from states.common import MainMenu
-from keyboards.reply.reply_kyeboards import get_main_menu_keyboard
+from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 from sqlalchemy.exc import IntegrityError
 from libs.tournamentError import TournamentError
 

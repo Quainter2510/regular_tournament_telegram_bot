@@ -64,10 +64,19 @@ class Tournament:
         full_matches = self.parser.parse()
         self.database.overwrite_matches(full_matches)
         
-
-
-
-
+    def get_current_tour(self):
+        return self.database.get_current_tour()
+    
+    def get_matches_of_tour(self, tour):
+        return self.database.get_matches_of_tour(tour)
         
+    def get_not_started_matches_of_tour(self, tour):
+        return self.database.get_not_started_matches_of_tour(tour)
+
+    def set_forecast(self, match_id, forecast, player_id):
+        self.database.set_forecast(player_id, match_id, int(forecast.split()[0]), int(forecast.split()[1]))
+
+    def is_started_match(self, match_id):
+        return self.database.is_started_match(match_id)
 
     

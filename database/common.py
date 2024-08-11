@@ -1,9 +1,9 @@
-from sqlalchemy import create_engine, func, or_
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from time import time 
 from typing import List, Tuple
 from libs.player import Player
 from libs.data_match import DataMatch
+from datetime import datetime
 
 
 from database.models import Base, Match, User, Forecast
@@ -97,4 +97,34 @@ class DataBase:
         self.session.query(Match).delete()
         for match in matches:
             self.add_match(match)
+            
+    def get_current_tour(self) -> int:
+        cur_tour = self.session.query(Match.tour).filter(Match.datetime > datetime.now()).first()
+        if cur_tour == None:
+            cur_tour = self.session.query(func.max(Match.tour))
+        return int(cur_tour[0])
+    
+    def get_not_started_matches_of_tour(self, tour):
+        '''(match_id, team_home, team_away, datetime, status)'''
+        return self.session.query(Match.match_id,
+                                  Match.team_home,
+                                  Match.team_away,
+                                  Match.datetime,
+                                  Match.status).filter(Match.tour == tour, 
+                                                       Match.datetime > datetime.now()).all()
+                                  
+    def get_matches_of_tour(self, tour: str):
+        '''(match_id, team_home, team_away, datetime, status)'''
+        return self.session.query(Match.match_id, Match.team_home, Match.team_away, Match.datetime, Match.status).\
+            filter(Match.tour == tour).all()
+            
+    def set_forecast(self, user_id: int, match_id: int, goals_home_pred: int, goals_away_pred: int) -> None:
+        self.session.query(Forecast).filter(Forecast.match_id == match_id,
+                                            Forecast.user_id == user_id).\
+                                            update({"goals_home_predict": goals_home_pred,
+                                                    "goals_away_predict": goals_away_pred})
+        self.session.commit()
         
+    def is_started_match(self, match_id):
+        return self.session.query(Match.match_id).filter(Match.match_id == match_id, 
+                                                       Match.datetime > datetime.now()).all() == None

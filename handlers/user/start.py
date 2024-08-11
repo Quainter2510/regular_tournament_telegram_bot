@@ -2,7 +2,7 @@ from loader import bot, tournament
 from libs.tournamentError import TournamentError
 from telebot.types import Message 
 from states.common import Registration, MainMenu
-from keyboards.inline.common import *
+from keyboards.inline.inline_keyboards import *
 from telebot.types import CallbackQuery
 from sqlalchemy.exc import IntegrityError
 

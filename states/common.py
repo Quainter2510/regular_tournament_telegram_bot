@@ -13,6 +13,11 @@ class MainMenu(StatesGroup):
     main_menu = State()
     enter_nickname = State()
     
+    choice_tour_for_change_forecast = State()
+    choice_match_for_change_forecast = State()
+    
+    enter_forecast = State()
+    
 
 class Admin(StatesGroup):
     choice_player_for_change_status = State()

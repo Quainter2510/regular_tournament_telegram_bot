@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
 class Match(Base):
     __tablename__ = 'match'
 
-    match_id = Column(Integer, primary_key=True) # from api
+    match_id = Column(Integer, primary_key=True) 
     tour = Column(Text, nullable=False)
     status = Column(Text, nullable=False)
     team_home = Column(Text, nullable=False)
@@ -28,7 +28,7 @@ class Match(Base):
 class Forecast(Base):
     __tablename__ = 'forecast'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     match_id = Column(Integer, ForeignKey('match.match_id'))
     user_id = Column(Integer, ForeignKey('user.telegram_id'))
     goals_home_predict = Column(Integer)

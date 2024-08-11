@@ -1,9 +1,14 @@
 from loader import bot
-from keyboards.inline.common import get_all_players_keyboard
-from states.common import Admin, MainMenu
+from states.common import MainMenu
+from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 
 
-@bot.callback_query_handler(func=lambda call: call.data == "0")
-def choice_player_for_change_status(call):
-    bot.send_message(call.message.chat.id, "Вы в главном меню")
+@bot.callback_query_handler(func=lambda call: call.data == "-1")
+def home_from_call(call):
+    bot.send_message(call.message.chat.id, "Вы в главном меню", reply_markup=get_main_menu_keyboard())
     bot.set_state(call.message.chat.id, MainMenu.main_menu)
+    
+@bot.message_handler(regexp="^Вернуться в меню$")
+def home_from_message(message):
+    bot.send_message(message.chat.id, "Вы в главном меню", reply_markup=get_main_menu_keyboard())
+    bot.set_state(message.chat.id, MainMenu.main_menu)
