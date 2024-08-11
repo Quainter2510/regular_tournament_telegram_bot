@@ -10,7 +10,7 @@ def get_main_menu_keyboard() -> types.ReplyKeyboardMarkup:
                types.KeyboardButton("Посмотреть турнирную таблицу"),
                types.KeyboardButton("Посмотреть свой прогноз"),
                types.KeyboardButton("Обновить"),
-               types.KeyboardButton("Сброс"),
+               types.KeyboardButton("Вернуться в меню"),
                types.KeyboardButton("Посмотреть прогноз всех участников"))
     return marcup
 

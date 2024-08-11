@@ -1,5 +1,5 @@
 from loader import bot, tournament
-from keyboards.reply.reply_keyboards import get_short_tour_menu_keyboard
+from keyboards.reply.reply_keyboards import get_short_tour_menu_keyboard, get_main_menu_keyboard
 from states.common import MainMenu
 from libs.tournament_error import TournamentError
 
@@ -18,7 +18,7 @@ def choice_match(message):
     matches = tournament.get_not_started_matches_of_tour(tour)
     user_matches = [(match_id, home, away) for match_id, home, away, dt, st in matches]
     if len(matches) == 0:
-        bot.send_message(message.chat.id, "Время прогноза истекло")
+        bot.send_message(message.chat.id, "Время прогноза истекло", reply_markup=get_main_menu_keyboard())
         bot.set_state(message.chat.id, MainMenu.main_menu)
         return
     bot.send_message(message.chat.id, "Вводите счет через пробел")
@@ -34,6 +34,7 @@ def set_forecast(message):
     try:
         with bot.retrieve_data(message.chat.id, message.chat.id) as data:
             match_id = data.get("selected_match_id")
+            tournament.set_forecast(match_id, message.text, message.chat.id)
             user_matches = data.get("user_matches")
             if len(user_matches) == 0:
                 get_tour_forecasts(message.chat.id)
@@ -43,18 +44,23 @@ def set_forecast(message):
                 data["user_matches"] = user_matches
                 data["selected_match_id"] = next_match[0]
                 bot.send_message(message.chat.id, f"{next_match[1]}-{next_match[2]}")
-            tournament.set_forecast(match_id, message.text, message.chat.id)
+            
     except TournamentError as e:
-        bot.send_message(message.chat.id, e)
+        bot.send_message(message.chat.id, e, reply_markup=get_main_menu_keyboard())
         bot.set_state(message.chat.id, MainMenu.main_menu)
+        
+@bot.message_handler(state=MainMenu.set_forecasts, is_correct_score=False)
+def incorrect_score(message):
+    bot.send_message(message.chat.id, "Некорректный счет. Введите два числа через пробел.")
         
         
 def get_tour_forecasts(user_id):
     with bot.retrieve_data(user_id, user_id) as data:
         tour = data.get("selected_tour")
     matches = tournament.get_matches_of_tour(tour)
-    bot.send_message(user_id, f"Ваш прогноз на {tour} тур :")
+    result_info = "Ваш прогноз на {tour} тур :\n\n"
     for match_data in matches:
         predict = tournament.get_predict_match(user_id, match_data[0])
-        bot.send_message(user_id, f"{match_data[1]} {predict[0]}:{predict[1]} {match_data[2]}")
+        result_info += f"{match_data[1]} {predict[0]}:{predict[1]} {match_data[2]}\n"
+    bot.send_message(user_id, result_info, reply_markup=get_main_menu_keyboard())
     bot.set_state(user_id, MainMenu.main_menu)

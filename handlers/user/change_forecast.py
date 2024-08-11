@@ -37,6 +37,6 @@ def set_forecast(message):
         bot.send_message(message.chat.id, e, reply_markup=get_main_menu_keyboard())
         bot.set_state(message.chat.id, MainMenu.main_menu)
     
-@bot.message_handler(state=MainMenu.enter_forecast, is_correct_score=False, func=lambda call: True)
+@bot.message_handler(state=MainMenu.enter_forecast, is_correct_score=False)
 def incorrect_score(message):
     bot.send_message(message.chat.id, "Некорректный счет. Введите два числа через пробел.")

@@ -83,3 +83,7 @@ class Tournament:
 
     def get_predict_match(self, player_id, match_id):
         return self.database.get_predict_match(player_id, match_id)
+    
+    def fill_forecasts(self):
+        for player_id, nickname in self.database.get_playersID_and_usernames():
+            self.database.add_forecasts_for_player(player_id)
