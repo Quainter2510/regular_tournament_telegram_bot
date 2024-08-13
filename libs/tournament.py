@@ -87,3 +87,41 @@ class Tournament:
     def fill_forecasts(self):
         for player_id, nickname in self.database.get_playersID_and_usernames():
             self.database.add_forecasts_for_player(player_id)
+            
+    def update_matches_result(self):
+        self.database.update_matches_result(self.parser.parse())
+            
+    def update_forecasts(self):
+        curr_tour = self.database.get_current_tour()
+        self.update_tour(curr_tour)
+        self.update_tour(curr_tour - 1)
+            
+    def counting_of_point_per_match(self, home_goals, away_goals, home_goals_predict, away_goals_predict):
+        print(home_goals, home_goals_predict, away_goals, away_goals_predict)
+        
+        if home_goals in ("-", "–", None) or home_goals_predict in ("-", "–", None):
+            return 0
+        home_goals, away_goals, home_goals_predict, away_goals_predict = map(int, (home_goals,
+                                                                                    away_goals,
+                                                                                    home_goals_predict,
+                                                                                    away_goals_predict))
+        if home_goals == home_goals_predict and away_goals == away_goals_predict:
+            return 3
+        if home_goals - home_goals_predict == away_goals - away_goals_predict:
+            return 2
+        if home_goals > home_goals_predict and  away_goals > home_goals_predict or \
+            home_goals < home_goals_predict and  away_goals < home_goals_predict:
+            return 1
+        return 0
+    
+    def update_tour(self, tour):
+        matches = self.database.get_matches_of_tour(tour)
+        for match_id, team_home, team_away, datetime, status in matches:
+            for player_id, nick in self.database.get_playersID_and_usernames():
+                predict = self.database.get_predict_match(player_id, match_id)
+                actual = self.database.get_actual_result_match(match_id)
+                points_per_match = self.counting_of_point_per_match(*actual, *predict)
+                print(player_id, match_id, points_per_match)
+                self.database.update_forecast_point(player_id, match_id, points_per_match)
+        
+        

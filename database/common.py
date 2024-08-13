@@ -133,3 +133,20 @@ class DataBase:
         """(goals_home_predict, goals_away_predict)"""
         return self.session.query(Forecast.goals_home_predict, Forecast.goals_away_predict).\
             filter(Forecast.match_id == match_id, Forecast.user_id == user_id).first()
+            
+    def get_actual_result_match(self, match_id):
+        return self.session.query(Match.goals_home, Match.goals_away).\
+            filter(Match.match_id == match_id).first()
+            
+    def update_forecast_point(self, player_id, match_id, points):
+        self.session.query(Forecast).filter(Forecast.match_id == match_id,
+                                            Forecast.user_id == player_id).\
+                                            update({"match_point": points})
+        self.session.commit()
+        
+    def update_matches_result(self, matches_data: List[DataMatch]):
+        for match_data in matches_data:
+            self.session.query(Match).filter(Match.match_id == match_data.match_id).\
+                update({"goals_home": match_data.home_goals, "goals_away": match_data.away_goals})
+
+        
