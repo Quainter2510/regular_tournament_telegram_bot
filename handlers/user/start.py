@@ -19,6 +19,10 @@ def start(message: Message):
     
 @bot.callback_query_handler(func=lambda call: True, state=Registration.confirmation_of_name_change)
 def set_nickname(call: CallbackQuery):
+    bot.edit_message_text(chat_id=call.message.chat.id, 
+                          message_id=call.message.message_id,
+                          text=call.message.text) 
+    
     if call.data == "Да":
         bot.send_message(call.from_user.id, "Введите никнейм")
         bot.set_state(call.from_user.id, MainMenu.enter_nickname)

@@ -20,6 +20,9 @@ def choice_match(message):
     
 @bot.callback_query_handler(state=MainMenu.choice_match_for_change_forecast, func=lambda call: call.data != "-1")
 def enter_score(call):
+    bot.edit_message_text(chat_id=call.message.chat.id, 
+                          message_id=call.message.message_id,
+                          text=call.message.text) 
     with bot.retrieve_data(call.from_user.id, call.message.chat.id) as data:
         data["selected_match_id"] = call.data
     bot.set_state(call.message.chat.id, MainMenu.enter_forecast)

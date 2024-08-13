@@ -4,7 +4,7 @@ from states.common import MainMenu
 from libs.tournament_error import TournamentError
 
 
-@bot.message_handler(state=MainMenu.main_menu, regexp="^Сделать прогноз$")
+@bot.message_handler(regexp="^Сделать прогноз$")
 def choice_tour(message):
     bot.send_message(message.chat.id, "Выберите тур",
                      reply_markup=get_short_tour_menu_keyboard(tournament.get_current_tour()))
