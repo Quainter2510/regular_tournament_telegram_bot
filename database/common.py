@@ -149,4 +149,5 @@ class DataBase:
             self.session.query(Match).filter(Match.match_id == match_data.match_id).\
                 update({"goals_home": match_data.home_goals, "goals_away": match_data.away_goals})
 
-        
+    def get_count_of_players(self):
+        return self.session.query(User).count()

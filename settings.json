@@ -2,5 +2,8 @@
 "registration_is_open": "True",
 "count_matches_in_tour": 8,
 "count_tours": 18,
+"image_width": 1920,
+"image_height": 1080,
+"minimum_players": 8,
 "url": "https://www.livecup.run/football/russia/premier-league/calendar-tour/"
 }

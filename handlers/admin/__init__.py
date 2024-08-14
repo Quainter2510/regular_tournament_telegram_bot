@@ -5,3 +5,4 @@ from . import send_all
 from . import get_players_info
 from . import overwrite
 from . import fill_forecasts
+from . import recreate_template

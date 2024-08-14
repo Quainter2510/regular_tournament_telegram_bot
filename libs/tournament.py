@@ -124,4 +124,5 @@ class Tournament:
                 print(player_id, match_id, points_per_match)
                 self.database.update_forecast_point(player_id, match_id, points_per_match)
         
-        
+    def get_count_of_players(self):
+        return self.database.get_count_of_players()
