@@ -19,8 +19,10 @@ class MainMenu(StatesGroup):
     choice_tour_for_set_forecast = State()
     set_forecasts = State()
     
-    
     enter_forecast = State()
+    
+    choice_tour_for_check_result = State()
+   
     
 
 class Admin(StatesGroup):

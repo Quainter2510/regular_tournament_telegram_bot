@@ -20,8 +20,10 @@ class Points_tour_markup:
         self.image_width = width
         self.number_of_players = number_of_players
         self.place_size = {"x": 0, "dx": 150}
-        self.name_size = {"x": 150, "dx": 1570}
-        self.points_size = {"x": 1720, "dx": 200}
+        self.name_size = {"x": 150, "dx": 1370}
+        self.main_points_size = {"x": 1520, "dx": 200}
+        self.additional_points_size = {"x": 1720, "dx": 200}
+        
         self.dy = height / (self.number_of_players + 1)
 
 

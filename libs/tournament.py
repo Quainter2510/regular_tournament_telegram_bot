@@ -96,9 +96,7 @@ class Tournament:
         self.update_tour(curr_tour)
         self.update_tour(curr_tour - 1)
             
-    def counting_of_point_per_match(self, home_goals, away_goals, home_goals_predict, away_goals_predict):
-        print(home_goals, home_goals_predict, away_goals, away_goals_predict)
-        
+    def counting_of_point_per_match(self, home_goals, away_goals, home_goals_predict, away_goals_predict):        
         if home_goals in ("-", "–", None) or home_goals_predict in ("-", "–", None):
             return 0
         home_goals, away_goals, home_goals_predict, away_goals_predict = map(int, (home_goals,
@@ -109,8 +107,8 @@ class Tournament:
             return 3
         if home_goals - home_goals_predict == away_goals - away_goals_predict:
             return 2
-        if home_goals > home_goals_predict and  away_goals > home_goals_predict or \
-            home_goals < home_goals_predict and  away_goals < home_goals_predict:
+        if home_goals > away_goals and home_goals_predict > home_goals_predict or \
+            home_goals < away_goals and home_goals_predict < home_goals_predict:
             return 1
         return 0
     
@@ -121,8 +119,10 @@ class Tournament:
                 predict = self.database.get_predict_match(player_id, match_id)
                 actual = self.database.get_actual_result_match(match_id)
                 points_per_match = self.counting_of_point_per_match(*actual, *predict)
-                print(player_id, match_id, points_per_match)
                 self.database.update_forecast_point(player_id, match_id, points_per_match)
         
     def get_count_of_players(self):
         return self.database.get_count_of_players()
+    
+    def get_ordered_players_in_intervals(self, start_int, finish_int):
+        return self.database.get_ordered_players_in_intervals(start_int, finish_int)

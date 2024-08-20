@@ -38,7 +38,9 @@ class TemplateCreator:
         imdraw = ImageDraw.Draw(img)
         imdraw.line((markup.name_size["x"], 0, markup.name_size["x"],
                      markup.image_height), fill="white", width=self.wide_line)
-        imdraw.line((markup.points_size["x"], 0, markup.points_size["x"], markup.image_height),
+        imdraw.line((markup.main_points_size["x"], 0, markup.main_points_size["x"], markup.image_height),
+                    fill="white", width=self.wide_line)
+        imdraw.line((markup.additional_points_size["x"], 0, markup.additional_points_size["x"], markup.image_height),
                     fill="white", width=self.wide_line)
         imdraw.line((0, markup.dy, markup.image_width, markup.dy), fill="white", width=self.wide_line)
 
@@ -48,7 +50,8 @@ class TemplateCreator:
 
         self.drawtext(imdraw, markup.place_size["x"], 0, markup.place_size["dx"], markup.dy, "Место")
         self.drawtext(imdraw, markup.name_size["x"], 0, markup.name_size["dx"], markup.dy, "Имя")
-        self.drawtext(imdraw, markup.points_size["x"], 0, markup.points_size["dx"], markup.dy, "Очки")
+        self.drawtext(imdraw, markup.main_points_size["x"], 0, markup.main_points_size["dx"], markup.dy, "Очки")
+        self.drawtext(imdraw, markup.additional_points_size["x"], 0, markup.additional_points_size["dx"], markup.dy, "Доп Очки")
 
         img.save("images/table_templates/template_points_tour.png", "png")
 

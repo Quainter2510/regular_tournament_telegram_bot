@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine, func, desc
 from sqlalchemy.orm import sessionmaker
 from typing import List, Tuple
 from libs.player import Player
@@ -82,7 +82,8 @@ class DataBase:
         self.session.commit()
         
     def player_is_admin(self, player_id):
-        return self.session.query(User.status).filter(User.telegram_id == player_id).one_or_none() in [("admin",), ("superadmin",)]
+        return self.session.query(User.status).\
+            filter(User.telegram_id == player_id).one_or_none() in [("admin",), ("superadmin",)]
     
     def player_is_superadmin(self, player_id):
         return self.session.query(User.status).filter(User.telegram_id == player_id).one_or_none() == ("superadmin",)
@@ -134,8 +135,16 @@ class DataBase:
         return self.session.query(Forecast.goals_home_predict, Forecast.goals_away_predict).\
             filter(Forecast.match_id == match_id, Forecast.user_id == user_id).first()
             
+    def get_points_of_match(self, player_id, match_id):
+        return self.session.query(Forecast.match_point).\
+            filter(Forecast.match_id == match_id, Forecast.user_id == player_id).first()[0]
+            
     def get_actual_result_match(self, match_id):
         return self.session.query(Match.goals_home, Match.goals_away).\
+            filter(Match.match_id == match_id).first()
+            
+    def get_commands(self, match_id):
+        return self.session.query(Match.team_home, Match.team_away).\
             filter(Match.match_id == match_id).first()
             
     def update_forecast_point(self, player_id, match_id, points):
@@ -147,7 +156,29 @@ class DataBase:
     def update_matches_result(self, matches_data: List[DataMatch]):
         for match_data in matches_data:
             self.session.query(Match).filter(Match.match_id == match_data.match_id).\
-                update({"goals_home": match_data.home_goals, "goals_away": match_data.away_goals})
+                update({"goals_home": match_data.home_goals,
+                        "goals_away": match_data.away_goals,
+                        "status": match_data.status})
 
     def get_count_of_players(self):
         return self.session.query(User).count()
+    
+    def get_ordered_players_in_intervals(self, start_tour, finish_tour):
+        return self.session.query(User.username, Forecast.user_id, func.sum(Forecast.match_point).label("sum_points")).\
+            join(Match).\
+            join(User).\
+            filter(Match.tour >= start_tour, Match.tour <= finish_tour, Match.status == "finished").\
+            group_by(Forecast.user_id).order_by(desc("sum_points")).all()
+            
+    def get_nickname(self, id_player):
+        return self.session.query(User.username).filter(User.telegram_id == id_player).first()[0]
+    
+    def get_main_points_per_tour(self, player_id, tour):
+        points = self.session.query(func.sum(Forecast.match_point)).\
+            join(Match, Forecast.match_id == Match.match_id).filter(Forecast.user_id == player_id, Match.tour == tour, Match.status == "finished").first()[0]
+        return points if points != None else 0
+            
+    def get_additional_points_per_tour(self, player_id, tour):
+        points = self.session.query(func.sum(Forecast.match_point)).\
+            join(Match, Forecast.match_id == Match.match_id).filter(Forecast.user_id == player_id, Match.tour == tour, Match.status == "in process").first()[0]
+        return points if points != None else 0
