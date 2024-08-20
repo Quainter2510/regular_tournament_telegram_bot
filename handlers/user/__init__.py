@@ -6,3 +6,4 @@ from . import change_forecast
 from . import set_forecasts
 from . import update
 from . import get_result_tour
+from . import get_main_table

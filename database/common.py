@@ -182,3 +182,6 @@ class DataBase:
         points = self.session.query(func.sum(Forecast.match_point)).\
             join(Match, Forecast.match_id == Match.match_id).filter(Forecast.user_id == player_id, Match.tour == tour, Match.status == "in process").first()[0]
         return points if points != None else 0
+    
+    def get_sum_points_of_player(self, player_id):
+        return self.session.query(func.sum(Forecast.match_point)).filter(Forecast.user_id == player_id).first()[0]
