@@ -11,7 +11,7 @@ def get_main_menu_keyboard() -> types.ReplyKeyboardMarkup:
                types.KeyboardButton("Посмотреть свой прогноз"),
                types.KeyboardButton("Обновить"),
                types.KeyboardButton("Вернуться в меню"),
-               types.KeyboardButton("Посмотреть прогноз всех участников"))
+               types.KeyboardButton("Посмотреть прогноз других участников"))
     return marcup
 
 def get_short_tour_menu_keyboard(current_tour):

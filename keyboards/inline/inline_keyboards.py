@@ -13,6 +13,11 @@ def get_all_players_keyboard(players_data):
         markup.add(InlineKeyboardButton(username, callback_data=str(player_id)))
     return markup
 
+def get_player_or_all(players_data):
+    markup = get_all_players_keyboard(players_data)
+    markup.add(InlineKeyboardButton("Выбрать всех", callback_data="all"))
+    return markup
+
 def get_all_statuses_keyboard():
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton("главное меню", callback_data="-1"))
