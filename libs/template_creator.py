@@ -1,5 +1,6 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 from libs.markup_table import Main_table_markup, Points_tour_markup, Result_tour_markup
+from config import config
 
 
 class TemplateCreator: 
@@ -113,7 +114,7 @@ class TemplateCreator:
 
         for i in range(1, self.number_of_tour + 1):
             imdraw.line((markup.tours_size["x"] + tours_dx * i, 0, markup.tours_size["x"] + tours_dx * i, markup.image_height))
-            self.drawtext(imdraw, markup.tours_size["x"] + tours_dx * (i - 1), 0, tours_dx, markup.head_size, "Тур\n" + str(i))
+            self.drawtext(imdraw, markup.tours_size["x"] + tours_dx * (i - 1), 0, tours_dx, markup.head_size, "Тур\n" + str(i + config.start_tour - 1))
 
         self.drawtext(imdraw, markup.place_size["x"], 0, markup.place_size["dx"], markup.head_size, "№")
         self.drawtext(imdraw, markup.name_size["x"], 0, markup.name_size["dx"], markup.head_size, "Имя")

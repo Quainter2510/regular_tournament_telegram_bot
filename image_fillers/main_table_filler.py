@@ -27,7 +27,7 @@ class MainTableFiller(ImageFiller):
             points = self.database.get_main_points_per_tour(player_id, tour)
             if tour > current_tour + 1:
                 points = "-"
-            self.fill_points(row, tour, str(points))
+            self.fill_points(row, tour - 1, str(points))
         self.fill_sum_points(row, str(sum_points))
         
     def fill_name(self, row, nickname):
