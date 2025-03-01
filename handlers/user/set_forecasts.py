@@ -58,7 +58,7 @@ def get_tour_forecasts(user_id):
     with bot.retrieve_data(user_id, user_id) as data:
         tour = data.get("selected_tour")
     matches = tournament.get_matches_of_tour(tour)
-    result_info = "Ваш прогноз на {tour} тур :\n\n"
+    result_info = f"Ваш прогноз на {tour} тур :\n\n"
     for match_data in matches:
         predict = tournament.get_predict_match(user_id, match_data[0])
         result_info += f"{match_data[1]} {predict[0]}:{predict[1]} {match_data[2]}\n"

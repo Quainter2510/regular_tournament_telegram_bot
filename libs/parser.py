@@ -1,5 +1,5 @@
 from re import fullmatch
-from datetime import date, datetime
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from libs.data_match import DataMatch
@@ -40,12 +40,13 @@ class Parser:
             result = quote.find_all("a")[0].text.split(":")
             home_team_goals = result[0]
             away_team_goals = result[1]
-            res.append(DataMatch(match_id=match_id,
-                                 tour=tour,
-                                 datetime=dt,
-                                 status=status,
-                                 home_team=home_team,
-                                 away_team=away_team,
-                                 home_goals=home_team_goals,
-                                 away_goals=away_team_goals))
+            if config.start_tour <= tour <= config.finish_tour:
+                res.append(DataMatch(match_id=match_id,
+                                    tour=tour,
+                                    datetime=dt,
+                                    status=status,
+                                    home_team=home_team,
+                                    away_team=away_team,
+                                    home_goals=home_team_goals,
+                                    away_goals=away_team_goals))
         return res
