@@ -22,6 +22,7 @@ def get_result_tour(message):
 
 @bot.callback_query_handler(state=MainMenu.choice_players_forecast, func=lambda call: call.data != "-1")
 def send_forecast(call):
+    bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, reply_markup=None) 
     with bot.retrieve_data(call.from_user.id, call.message.chat.id) as data:
         tour = data.get("selected_tour")
     if call.data == "all":

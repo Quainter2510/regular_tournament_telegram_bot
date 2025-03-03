@@ -23,6 +23,8 @@ class MainMenu(StatesGroup):
     
     choice_tour_for_check_result = State()
     
+    choice_tour_for_check_self_forecast = State()
+    
     choice_tour_for_send_forecast= State()
     choice_players_forecast = State()
     

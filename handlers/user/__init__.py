@@ -8,3 +8,4 @@ from . import update
 from . import get_result_tour
 from . import get_main_table
 from . import get_other_forecast
+from . import get_my_forecast
