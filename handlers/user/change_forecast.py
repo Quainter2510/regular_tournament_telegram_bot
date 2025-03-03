@@ -6,6 +6,8 @@ from libs.tournament_error import TournamentError
 
 @bot.message_handler(regexp="^Изменить прогноз$")
 def choice_tour(message):
+    bot.send_message(message.chat.id, "В этом турнире эта функция недоступна")
+    return 
     bot.send_message(message.chat.id, "Выберите тур",
                      reply_markup=get_short_tour_menu_keyboard(tournament.get_current_tour()))
     bot.set_state(message.chat.id, MainMenu.choice_tour_for_change_forecast)
@@ -20,6 +22,7 @@ def choice_match(message):
     
 @bot.callback_query_handler(state=MainMenu.choice_match_for_change_forecast, func=lambda call: call.data != "-1")
 def enter_score(call):
+    bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, reply_markup=None) 
     bot.edit_message_text(chat_id=call.message.chat.id, 
                           message_id=call.message.message_id,
                           text=call.message.text) 
