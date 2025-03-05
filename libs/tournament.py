@@ -126,3 +126,6 @@ class Tournament:
     
     def get_ordered_players_in_intervals(self, start_int, finish_int):
         return self.database.get_ordered_players_in_intervals(start_int, finish_int)
+    
+    def is_forecast_done(self, tour, player_id):
+        return self.database.is_forecast_done(tour, player_id)

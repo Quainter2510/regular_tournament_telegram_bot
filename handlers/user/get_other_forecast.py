@@ -15,6 +15,11 @@ def choice_tour(message):
 @bot.message_handler(state=MainMenu.choice_tour_for_send_forecast, regexp=r"^\d{1,} тур")
 def get_result_tour(message):
     tour = int(message.text.split()[0]) 
+    if not tournament.is_forecast_done(tour, message.chat.id):
+        bot.send_message(message.chat.id, "Вы не можете смотреть прогнозы других игроков пока не сделаете прогноз",
+                         reply_markup=get_main_menu_keyboard())
+        bot.set_state(message.chat.id, MainMenu.main_menu)
+        return 
     bot.send_message(message.chat.id, "Выберите игрока", reply_markup=get_player_or_all(tournament.get_all_players_id_and_usernames()))
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data["selected_tour"] = tour 

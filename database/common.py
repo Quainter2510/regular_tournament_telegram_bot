@@ -185,3 +185,12 @@ class DataBase:
     
     def get_sum_points_of_player(self, player_id):
         return self.session.query(func.sum(Forecast.match_point)).filter(Forecast.user_id == player_id).first()[0]
+    
+    def is_forecast_done(self, tour, player_id):
+        matches = self.get_matches_of_tour(tour)
+        for match_id, team_home, team_away, datetime, status in matches:
+            pred = self.get_predict_match(player_id, match_id)
+            if pred == (None, None) and status == "expected":
+                return False
+        return True
+        
