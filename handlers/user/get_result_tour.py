@@ -29,4 +29,5 @@ def get_result_tour(message):
     result_filler.fill_table(tour, message.chat.id)
     img = open("images/ready_tables/result_tour.png", 'rb')
     bot.send_photo(message.chat.id, img, reply_markup=get_main_menu_keyboard())
+    tournament.show_result_tour(message.chat.id)
       

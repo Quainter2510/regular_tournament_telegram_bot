@@ -13,3 +13,4 @@ def get_main_table(message):
     result_filler.fill_table()
     img = open("images/ready_tables/main_table.png", 'rb')
     bot.send_photo(message.chat.id, img, reply_markup=get_main_menu_keyboard())
+    tournament.show_main_table(message.chat.id)

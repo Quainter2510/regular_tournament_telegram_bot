@@ -32,6 +32,7 @@ def send_forecast(call):
         tour = data.get("selected_tour")
     if call.data == "all":
         players = tournament.get_ordered_players_in_intervals(0, tour)
+        tournament.show_all_other_forecasts(call.message.chat.id, tour)
         for nick, player_id, points in players:
             send_player_forecast(tour, player_id, call.from_user.id)
     else:
