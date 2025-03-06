@@ -1,4 +1,5 @@
 from loader import bot, tournament
+from config.config import config
 from states.common import MainMenu
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 from sqlalchemy.exc import IntegrityError
@@ -7,6 +8,9 @@ from libs.tournament_error import TournamentError
 
 @bot.message_handler(state="*", regexp="^Изменить имя$")
 def set_nickname(message):
+    if not config.registration_is_open:
+        bot.send_message(message.chat.id, "Вы не можете менять имя после начала турнира", reply_markup=get_main_menu_keyboard())
+        return
     bot.set_state(message.chat.id, MainMenu.enter_nickname)
     bot.send_message(message.chat.id, "Введите новое имя")
 

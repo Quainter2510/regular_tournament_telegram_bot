@@ -2,17 +2,22 @@ from telebot import types
 from config.config import config
 
 def get_main_menu_keyboard() -> types.ReplyKeyboardMarkup:
-    marcup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-    marcup.add(types.KeyboardButton("Сделать прогноз"))
-    # marcup.add(types.KeyboardButton("Изменить прогноз"))
+    marcup = types.ReplyKeyboardMarkup(one_time_keyboard=True, row_width=3)
     if config.registration_is_open:
-        marcup.add(types.KeyboardButton("Изменить имя"))
-    marcup.add(types.KeyboardButton("Посмотреть итог тура"))
-    marcup.add(types.KeyboardButton("Посмотреть турнирную таблицу"))
-    marcup.add(types.KeyboardButton("Посмотреть свой прогноз"))
-    marcup.add(types.KeyboardButton("Обновить"))
-    marcup.add(types.KeyboardButton("Вернуться в меню"))
-    marcup.add(types.KeyboardButton("Посмотреть прогноз других участников"))
+        marcup.add(types.KeyboardButton("Сделать прогноз"),
+                #    types.KeyboardButton("Изменить прогноз"),
+                types.KeyboardButton("Изменить имя"),
+                types.KeyboardButton("Посмотреть итог тура"))
+    else:
+        marcup.add(types.KeyboardButton("Сделать прогноз"),
+                #    types.KeyboardButton("Изменить прогноз"),
+                # types.KeyboardButton("Изменить имя"),
+                types.KeyboardButton("Посмотреть итог тура"))
+    marcup.add(types.KeyboardButton("Посмотреть турнирную таблицу"),
+               types.KeyboardButton("Посмотреть свой прогноз"),
+               types.KeyboardButton("Обновить"),
+               types.KeyboardButton("Вернуться в меню"),
+               types.KeyboardButton("Посмотреть прогноз других участников"))
     return marcup
 
 def get_short_tour_menu_keyboard(current_tour):
