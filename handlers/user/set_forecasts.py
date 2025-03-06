@@ -13,7 +13,7 @@ def choice_tour(message):
 @bot.message_handler(state=MainMenu.choice_tour_for_set_forecast, regexp=r"^\d{1,} тур")
 def choice_match(message):
     tour = int(message.text.split()[0])
-    if not tournament.is_forecast_done(tour, message.chat.id):
+    if tournament.is_forecast_done(tour, message.chat.id):
         bot.send_message(message.chat.id, "Вы не можете менять прогноз", reply_markup=get_main_menu_keyboard())
         bot.set_state(message.chat.id, MainMenu.main_menu)
         return 
