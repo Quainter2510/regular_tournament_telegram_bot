@@ -20,5 +20,5 @@ def get_tour_forecasts(message):
         predict = tournament.get_predict_match(message.chat.id, match_data[0])
         result_info += f"{match_data[1]} {predict[0]}:{predict[1]} {match_data[2]}\n"
     bot.send_message(message.chat.id, result_info, reply_markup=get_main_menu_keyboard())
-    tournament.show_self_forecast(message.chat.id)
+    tournament.show_self_forecast(message.chat.id, tour)
     bot.set_state(message.chat.id, MainMenu.main_menu)

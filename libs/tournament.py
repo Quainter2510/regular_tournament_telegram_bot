@@ -147,8 +147,8 @@ class Tournament:
     def show_main_table(self, player_id):
         self.logs_handler.get_main_table(player_id)
         
-    def show_self_forecast(self, player_id):
-        self.logs_handler.get_my_forecast(player_id)
+    def show_self_forecast(self, player_id, tour):
+        self.logs_handler.get_my_forecast(player_id, tour)
         
     def show_result_tour(self, player_id):
         self.logs_handler.get_result_tour(player_id)
