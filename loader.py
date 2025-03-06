@@ -4,7 +4,7 @@ from libs.tournament import Tournament
 
 
 state_storage = StateMemoryStorage() 
-bot = TeleBot(config.TEST_BOT_TOKEN,
+bot = TeleBot(config.MAIN_BOT_TOKEN,
                 state_storage=state_storage)
 
 tournament = Tournament()
