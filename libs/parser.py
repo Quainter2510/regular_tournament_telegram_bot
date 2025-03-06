@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from libs.data_match import DataMatch
-from config import config
+from config.config import config
 
 
 

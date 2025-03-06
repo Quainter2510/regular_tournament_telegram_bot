@@ -1,6 +1,6 @@
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 from libs.markup_table import Main_table_markup, Points_tour_markup, Result_tour_markup
-from config import config
+from config.config import config
 
 
 class TemplateCreator: 

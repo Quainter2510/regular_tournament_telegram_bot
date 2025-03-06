@@ -1,5 +1,5 @@
 from database.common import DataBase
-from config import config
+from config.config import config
 from libs.player import Player
 from libs.tournament_error import TournamentError
 from libs.parser import Parser

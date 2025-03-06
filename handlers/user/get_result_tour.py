@@ -1,5 +1,5 @@
 from loader import bot, tournament
-from config import config
+from config.config import config
 from image_fillers.points_tour_filler import PointsTourFiller
 from image_fillers.result_tour_filler import ResultTourFiller
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard, get_short_tour_menu_keyboard

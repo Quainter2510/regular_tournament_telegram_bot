@@ -32,6 +32,9 @@ class MainMenu(StatesGroup):
     
 
 class Admin(StatesGroup):
+    choice_settings = State()
+    change_settings = State()
+    
     choice_player_for_change_status = State()
     change_status = State()
     

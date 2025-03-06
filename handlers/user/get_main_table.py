@@ -1,5 +1,5 @@
 from loader import bot, tournament
-from config import config
+from config.config import config
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 from image_fillers.main_table_filler import MainTableFiller
 

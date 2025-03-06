@@ -38,3 +38,14 @@ def get_matches_menu(matches):
     for match_id, team_home, team_away, datetime, status in matches:
         markup.add(InlineKeyboardButton(f"{team_home}-{team_away}", callback_data=str(match_id)))
     return markup
+
+def get_all_settings():
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton("all_func_ready", callback_data="all_func_ready"))
+    markup.add(InlineKeyboardButton("registration_is_open", callback_data="registration_is_open"))
+    markup.add(InlineKeyboardButton("count_matches_in_tour", callback_data="count_matches_in_tour"))
+    markup.add(InlineKeyboardButton("count_tours", callback_data="count_tours"))
+    markup.add(InlineKeyboardButton("start_tour", callback_data="start_tour"))
+    markup.add(InlineKeyboardButton("finish_tour", callback_data="finish_tour"))
+    markup.add(InlineKeyboardButton("главное меню", callback_data="-1"))
+    return markup

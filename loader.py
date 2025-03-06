@@ -1,5 +1,5 @@
 from telebot import TeleBot, StateMemoryStorage
-from config import config
+from config.config import config
 from libs.tournament import Tournament
 
 

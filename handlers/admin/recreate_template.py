@@ -1,6 +1,6 @@
 from loader import bot, tournament
 from libs.template_creator import TemplateCreator
-from config import config
+from config.config import config
 from keyboards.reply.reply_keyboards import get_main_menu_keyboard
 
 @bot.message_handler(commands=["recreate_template"], is_admin=True)

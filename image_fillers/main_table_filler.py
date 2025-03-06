@@ -1,6 +1,6 @@
 from libs.markup_table import Main_table_markup, Points_tour_markup, Result_tour_markup
 from PIL import ImageDraw, ImageFont, Image
-from config import config
+from config.config import config
 from database.common import Base
 from image_fillers.image_filler import ImageFiller
 
