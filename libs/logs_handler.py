@@ -1,9 +1,8 @@
-from database.logs_database import DataBase
 from libs.history_logs_dataclasses import ActivitiesLogsData, ForecastLogsData
 
 class LogsHendler:
-    def __init__(self):
-        self.database = DataBase()
+    def __init__(self, database):
+        self.database = database
         
     def change_forecast(self, player_id, match_id, goals_home, goals_away):
         foreacast_data = ForecastLogsData(player_id, 

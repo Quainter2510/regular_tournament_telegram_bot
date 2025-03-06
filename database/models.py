@@ -44,3 +44,24 @@ class User(Base):
     payment = Column(Text, nullable=False, default="debtor")
     points_sum = Column(Integer, default=0)
     forecast = relationship('Forecast')
+
+
+class HistoryForecast(Base):
+    __tablename__ = 'history_forecast'
+   
+    id = Column(Integer, autoincrement=True, primary_key=True)  
+    datetime = Column(DateTime)
+    telegram_id = Column(Integer)
+    match_id = Column(Integer)
+    status = Column(Text)
+    goals_home_predict = Column(Integer)
+    goals_away_predict = Column(Integer)
+    
+class HistoryActivities(Base):
+    __tablename__ = 'activities'
+   
+    id = Column(Integer, autoincrement=True, primary_key=True) 
+    datetime = Column(DateTime)
+    telegram_id = Column(Integer)
+    activities = Column(Text, nullable=False)
+    description = Column(Text)

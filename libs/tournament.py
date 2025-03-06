@@ -9,7 +9,7 @@ class Tournament:
     def __init__(self) -> None:
         self.database = DataBase()
         self.parser = Parser()
-        self.logs_handler = LogsHendler()
+        self.logs_handler = LogsHendler(self.database)
 
     def add_player(self, nickname, tg_id):
         self.possible_to_register(nickname, tg_id)
