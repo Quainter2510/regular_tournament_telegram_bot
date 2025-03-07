@@ -120,7 +120,7 @@ class Tournament:
             return 5
         if home_goals - home_goals_predict == away_goals - away_goals_predict:
             return 3
-        if home_goals > away_goals and home_goals_predict > home_goals_predict or \
+        if home_goals > away_goals and home_goals_predict > away_goals_predict or \
             home_goals < away_goals and home_goals_predict < away_goals_predict:
             return 2
         return 0
