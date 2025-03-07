@@ -10,8 +10,9 @@ from config.config import config
 class Parser:   
     def time_transform(self, datetime: str) -> str:
         time = " ".join(datetime.split()[1:])
-        time = "00:00" if time == 'ок' else time
-        return time 
+        if fullmatch(r"\d\d:\d\d", time):
+            return time
+        return "00:00"
     
     def get_match_status(self, datetime: str) -> str:
         time = datetime.split()[1]
