@@ -24,7 +24,7 @@ def get_short_tour_menu_keyboard(current_tour):
     marcup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     marcup.add(types.KeyboardButton("Вернуться в меню"))
     min_tour = max(current_tour - 3, config.start_tour)
-    max_tour = min(current_tour + 3, config.finish_tour)
+    max_tour = min(current_tour + 3, config.finish_tour + 1)
     for i in range(min_tour, max_tour):
         marcup.add(types.KeyboardButton(f"{i} тур"))
     return marcup
