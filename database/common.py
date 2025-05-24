@@ -98,7 +98,7 @@ class DataBase:
     def get_current_tour(self) -> int:
         cur_tour = self.session.query(Match.tour).filter(Match.datetime > datetime.now()).first()
         if cur_tour == None:
-            cur_tour = self.session.query(func.max(Match.tour))
+            cur_tour = self.session.query(func.max(Match.tour)).first()
         return int(cur_tour[0])
     
     def get_not_started_matches_of_tour(self, tour):
